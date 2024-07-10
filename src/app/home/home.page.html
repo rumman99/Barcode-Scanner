@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="dart" fill="clear">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item lines="none" class="ion-margin-vertical">
+    <ion-label>
+      Hello
+      <p>
+        <ion-text color="dark"> Developers </ion-text>
+      </p>
+    </ion-label>
+    <ion-thumbnail slot="end">
+      <img [src]="'assets/img/developer.png'" />
+    </ion-thumbnail>
+  </ion-item>
+
+  <ion-list-header> Your Insight </ion-list-header>
+
+  <ion-row class="ion-margin">
+
+    <ion-col size="6" class="ion-text-center">
+      <ion-card color="light">
+        <ion-thumbnail [style.background]="'rgba(240,94,112, 0.2)'">
+          <ion-icon name="scan-outline" color="tertiary"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>Scan Barcode</ion-label>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6" class="ion-text-center">
+      <ion-card color="light">
+        <ion-thumbnail [style.background]="'rgba(255,152,0, 0.2)'">
+          <ion-icon color="warning" name="list-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>Products</ion-label>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6" class="ion-text-center">
+      <ion-card color="light">
+        <ion-thumbnail [style.background]="'rgba(76,175,80, 0.2)'">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>Transactions</ion-label>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6" class="ion-text-center">
+      <ion-card color="light">
+        <ion-thumbnail [style.background]="'rgba(94,155,240, 0.2)'">
+          <ion-icon name="bag-handle-outline" color="secondary"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>Orders</ion-label>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6" class="ion-text-center">
+      <ion-card color="light">
+        <ion-thumbnail [style.background]="'rgba(94,155,240, 0.2)'">
+          <ion-icon name="bag-handle-outline" color="secondary"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>Scan QR & Barcode</ion-label>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+</ion-content>
