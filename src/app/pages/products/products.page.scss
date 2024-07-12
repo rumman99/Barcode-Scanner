@@ -1,0 +1,27 @@
+ion-item{
+    margin-bottom: 3vh;
+    ion-thumbnail{
+        width: 6rem;
+        height: 6rem;
+        ion-img{
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+}
+    }
+    ion-label, ion-text{
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    p{
+        font-size: 0.875rem;
+        font-weight: normal;
+        margin-top: 10px;
+    }
+}
+
+ion-button{
+    font-size: 1.5rem;
+}

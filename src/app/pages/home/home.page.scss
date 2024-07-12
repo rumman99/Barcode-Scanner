@@ -46,8 +46,17 @@ ion-card{
         margin-bottom: 1.3vh;
         ion-icon{
             font-size: 2rem;
+            cursor: pointer;
         }
+        &:hover{
+          zoom: 1.1;
+          transition: 400;
+          -webkit-transition: 400;
+          -moz-transition: 400;
+          -ms-transition: 400;
+          -o-transition: 400;
 }
+    }
     ion-label{
         font-size: 1rem;
         font-weight: 500;
@@ -58,4 +67,8 @@ ion-card, ion-thumbnail{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.mouse-pointer{
+  
 }
