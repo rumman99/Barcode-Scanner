@@ -1,23 +1,140 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonLabel, IonItem, IonText, IonThumbnail, IonListHeader, IonCol, IonRow, IonCard } from '@ionic/angular/standalone';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonLabel,
+  IonItem,
+  IonText,
+  IonThumbnail,
+  IonListHeader,
+  IonCol,
+  IonRow,
+  IonCard,
+  IonToast,
+  IonBadge,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bagHandleOutline, cartOutline, checkmarkCircle, listOutline, scanOutline, barcodeOutline, closeOutline } from 'ionicons/icons';
+import {
+  bagHandleOutline,
+  cartOutline,
+  checkmarkCircle,
+  listOutline,
+  scanOutline,
+  barcodeOutline,
+  closeOutline,
+} from 'ionicons/icons';
+import { Subscription } from 'rxjs';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonCard, IonRow, IonCol, IonListHeader, IonText, IonItem, IonLabel, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonThumbnail, RouterLink],
+  imports: [
+    IonBadge,
+    IonToast,
+    IonCard,
+    IonRow,
+    IonCol,
+    IonListHeader,
+    IonText,
+    IonItem,
+    IonLabel,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonThumbnail,
+    RouterLink,
+  ],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  toastData = { message: '', color: '' };
+  isToast = false;
+  totalItems = 0;
+  cartSub!: Subscription;
+  private cartService = inject(CartService);
+
   constructor() {
-    this.addAllIcons()
+    this.addAllIcons();
   }
 
-  addAllIcons(){
-    addIcons({cartOutline, scanOutline, listOutline, checkmarkCircle, bagHandleOutline, barcodeOutline, closeOutline})
+  ngOnInit() {
+    this.cartSub = this.cartService.cart.subscribe({
+      next: (cart) => {
+        console.log(cart);
+        this.totalItems = cart ? cart?.totalItem : 0;
+      },
+      error(err) {
+        console.log(err)
+      },
+    });
   }
 
+  addAllIcons() {
+    addIcons({
+      cartOutline,
+      scanOutline,
+      listOutline,
+      checkmarkCircle,
+      bagHandleOutline,
+      barcodeOutline,
+      closeOutline,
+    });
+  }
+
+  async scanBarcode() {
+    try {
+      const barCode = await this.cartService.startScan();
+      console.log(barCode);
+      if (!barCode) {
+        this.isToast = true;
+        this.toastData = {
+          color: 'danger',
+          message: 'No Such Barcode Found',
+        };
+        return;
+      }
+      this.isToast = true;
+      this.toastData = {
+        color: 'success',
+        message: 'Payment Done',
+      };
+      this.cartService.addItemByBarcode(barCode);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async scanQr() {
+    try {
+      const qrCode = await this.cartService.startScan(0);
+      console.log(qrCode);
+      if (!qrCode) {
+        this.isToast = true;
+        this.toastData = {
+          color: 'danger',
+          message: 'No Such QR Code Found',
+        };
+        return;
+      }
+      this.isToast = true;
+      this.toastData = {
+        color: 'success',
+        message: 'Payment Done',
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

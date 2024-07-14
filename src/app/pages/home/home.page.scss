@@ -1,6 +1,26 @@
 ion-header {
   ion-toolbar {
     --background: white;
+    ion-badge{
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+      margin: 0 -0.3rem 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      ion-text{
+        font-size: 0.6rem;
+        font-weight: bold;
+      }
+    }
   }
 }
 
