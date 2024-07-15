@@ -1,13 +1,59 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>cart</ion-title>
+    <ion-title>Cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button color="dark" (click)="startScan()">
+        <ion-icon name="scan-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cart</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  @if(cartData){ @for(product of cartData?.items; track $index){
+  <ion-card color="light" class="ion-padding-vertical">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="product?.image"></ion-img>
+      </ion-thumbnail>
+
+      <ion-label>
+        {{product?.name}}
+        <p class="price">
+          <ion-text color="primary">
+            <strong>{{currency}} {{product?.price}}</strong>
+          </ion-text>
+        </p>
+      </ion-label>
+
+      <ion-row slot="end">
+        <ion-col>
+          <ion-button fill="clear" color="primary" (click)="subtractQuantity(product)">
+            <ion-icon slot="icon-only" name="remove"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col class="quantity">
+          <ion-text>
+            <strong>{{product?.quantity}}</strong>
+          </ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="clear" color="primary" (click)="addQuantity(product)">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+  } } 
+  @else {
+  <div align="center" class="empty-screen">
+    <ion-icon color="primary" name="cart-outline"></ion-icon>
+    <p>No item Added Yet</p>
+  </div>
+  }
 </ion-content>

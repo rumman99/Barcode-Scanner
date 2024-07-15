@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonHeader,
@@ -19,16 +19,6 @@ import {
   IonToast,
   IonBadge,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  bagHandleOutline,
-  cartOutline,
-  checkmarkCircle,
-  listOutline,
-  scanOutline,
-  barcodeOutline,
-  closeOutline,
-} from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart/cart.service';
 
@@ -58,7 +48,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
     RouterLink,
   ],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   toastData = { message: '', color: '' };
   isToast = false;
   totalItems = 0;
@@ -66,7 +56,6 @@ export class HomePage implements OnInit {
   private cartService = inject(CartService);
 
   constructor() {
-    this.addAllIcons();
   }
 
   ngOnInit() {
@@ -78,18 +67,6 @@ export class HomePage implements OnInit {
       error(err) {
         console.log(err)
       },
-    });
-  }
-
-  addAllIcons() {
-    addIcons({
-      cartOutline,
-      scanOutline,
-      listOutline,
-      checkmarkCircle,
-      bagHandleOutline,
-      barcodeOutline,
-      closeOutline,
     });
   }
 
@@ -136,5 +113,9 @@ export class HomePage implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  ngOnDestroy(): void {
+      if(this.cartSub) this.cartSub.unsubscribe();
   }
 }
