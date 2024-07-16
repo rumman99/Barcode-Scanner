@@ -14,7 +14,10 @@
 </ion-header>
 
 <ion-content>
-  @if(cartData){ @for(product of cartData?.items; track $index){
+  @if(cartData)
+  { 
+    @for(product of cartData?.items; track $index)
+    {
   <ion-card color="light" class="ion-padding-vertical">
     <ion-item>
       <ion-thumbnail slot="start">
@@ -49,11 +52,75 @@
       </ion-row>
     </ion-item>
   </ion-card>
-  } } 
+  } 
+  <!-- Billing Details -->
+  <ion-list lines="none" class="ion-margin">
+    <ion-item>
+      <ion-label color="darl">
+        <strong>Total</strong>
+      </ion-label>
+      <ion-text slot="end" color="primary">
+        <strong>{{currency}} {{cartData?.totalPrice | number:'0.2-2'}}</strong>
+      </ion-text>
+    </ion-item>
+   </ion-list>
+}
   @else {
   <div align="center" class="empty-screen">
     <ion-icon color="primary" name="cart-outline"></ion-icon>
     <p>No item Added Yet</p>
   </div>
   }
+
+  @if(cartData){
+    <div class="ion-margin">
+      <ion-button 
+        expand="block"
+        color="primary"
+        mode="ios"
+        (click)="isQrPay=true"
+      >
+       Process to Checkout
+      </ion-button>
+    </div>
+  }
+  
+  <ion-modal
+    #qrcode_model
+    [isOpen]="isQrPay"
+    (didDismiss)="!isQrPay"
+  >
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-title>Pay {{currency}}{{cartData?.totalPrice}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="qrcode_model.dismiss()" color="dark">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <div class="ion-margin" [align]="'center'">
+        <ion-label>Scan QR Code</ion-label>
+        <qrcode
+          [qrdata]="(cartData.totalPrice).toString()"
+          [width]="256"
+          [errorCorrectionLevel]="'M'"
+        >
+
+        </qrcode>
+      </div>
+
+      <div>
+        <ion-button (click)="pay(qrcode_model)" expand="block" color="primary">
+         Scan & Pay
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+
+  </ion-modal>
 </ion-content>

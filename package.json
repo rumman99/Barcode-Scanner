@@ -31,6 +31,7 @@
     "@capacitor/preferences": "^6.0.1",
     "@capacitor/status-bar": "6.0.0",
     "@ionic/angular": "^8.0.0",
+    "angularx-qrcode": "^17.0.1",
     "ionicons": "^7.2.1",
     "jsbarcode": "^3.11.6",
     "rxjs": "~7.8.0",

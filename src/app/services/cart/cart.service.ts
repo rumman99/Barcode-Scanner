@@ -22,7 +22,7 @@ export class CartService {
 
   constructor() {
     this.getCartData()
-    this.addQuantity(this.products[0]);
+    // this.addQuantity(this.products[0]);
   }
 
   async startScan(val?: number) {
@@ -65,7 +65,7 @@ export class CartService {
             quantity: 1,
           },
         ];
-        this.cartData.items = items.concat(this.cartData.items);
+        this.cartData.items.push(items);
       }
     } else {
       const items = {
